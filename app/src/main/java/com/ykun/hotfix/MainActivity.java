@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity {
     private void downloadPatch() {
         //1 从服务器下载dex文件 比如v1.1修复包文件（classes2.dex）
         File sourceFile = new File(Environment.getExternalStorageDirectory(), "classes2.dex");
+        if (!sourceFile.exists()){ Toast.makeText(getApplicationContext(),"修复包不存在!",Toast.LENGTH_LONG).show();return;}
         // 目标路径：私有目录
         //getDir("odex", Context.MODE_PRIVATE) data/user/0/包名/app_odex
         File targetFile = new File(getDir("hotfix",
@@ -53,7 +55,7 @@ public class MainActivity extends BaseActivity {
             FileUtils.copyFile(sourceFile, targetFile);
             Toast.makeText(this, "Bug 修复成功!", Toast.LENGTH_SHORT).show();
             FixDexUtils.loadFixedDex(this);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

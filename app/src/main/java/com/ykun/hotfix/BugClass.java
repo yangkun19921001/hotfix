@@ -1,8 +1,10 @@
 package com.ykun.hotfix;
 
+import android.widget.Toast;
+
 class BugClass {
-    public void startBug() {
-        System.out.println(20 / 0);
-//        System.out.println(20 / 1);
+    public int startBug() {
+//        System.out.println(20 / 0);
+        return 20 / 1;
     }
 }
